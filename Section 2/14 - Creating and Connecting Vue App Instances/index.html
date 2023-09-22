@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Course Goals</h1>
+    </header>
+    <section id="user-goal">
+      <h2>My Course Goal</h2>
+      <!-- You can also add javascript functions that are methods within the {{ }}-->
+      <p>{{ outputGoal() }}</p>
+      <!-- You can also put basic calculations within the {{ }}-->
+      <p>{{ 1 + 1 }}</p>
+      <!-- If you need to output html, you can use the v-html attribute, not covered here-->
+      <!-- Vue Iterpolation syntax to insert a variable within html brackets-->
+      <p>{{ courseGoal }}</p>
+      <!-- Vue syntax when adding variables within html attributes -->
+      <p>Learn more <a v-bind:href="vueLink">about Vue</a></p>
+    </section>
+  </body>
+</html>
