@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <button v-on:click="add(10)">Add 10</button>
+      <button v-on:click="reduce(5)">Subtract 5</button>
+      <p>Result: {{ counter }}</p>
+      <!--
+        This is a common experience, where you want the input to adjust
+        the value of a variable, but you also want the value of the
+        input box to reflect that value.
+        This is a concept called 2-way binding.   It has a shortcut method
+        called v-model used with v-bind, and is shown in the next 2 input
+        boxes, which do the same thing.
+      -->
+      <input type="text" v-bind:value="name" v-on:input="setName">
+      <input type="text" v-model="name" v-bind:value>
+
+      <button v-on:click="resetInput">Reset Input</button>
+      <!--
+        He showed an example using a function to add the surname to the name
+        here using a function outputFullName(), but the problem with this is
+        whenever the other buttons are pressed, this function also runs, which
+        is inefficient.    Using functions to display output within the html
+        is inefficient.
+      -->
+      <p>Your Name: {{ outputFullName() }}</p>
+      <!-- NOTE: no closing brackets -->
+      <p>Your Name: {{ fullname }}</p>
+      <!--
+        Video 29 is really worth re-watching.
+        It is better to use computed properties whenever you are outputting
+        something to the screen, unless you specifically want the function
+        to recalculate whenever something changes on the screen.
+        It is better to use methods for things like events.
+      -->
+
+
+      <!--
+        Good Summary on Methods, Computed and Watchers:
+        Methods:
+          - Use with event or data binding, but is recalculated for every
+          re-render cycle of the component.   Useful for 'events' OR 'data'
+          that really needs to be re-evaluated all of the tmie.
+        Computed:
+          - Use with data binding.   They are only called when one of their
+          used values changes.   Useful for data that depends upon other
+          data.
+        Watch:
+          - Not used directly within the template and is useful for non-data
+          updates.   It allows you to run code based upon some changed data.
+      -->
+
+      <!--
+        Important shortcuts:
+          @click is the same as v-on:click
+          :value is the same as v-bind:value
+      -->
+    </section>
+  </body>
+</html>
