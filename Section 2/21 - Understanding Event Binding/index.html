@@ -27,6 +27,11 @@
       <button v-on:click="adjust(5)">Add 5</button>
       <!-- Event modifier used so that it only responds to right click-->
       <button v-on:click.right="adjust(-5)">Remove 5</button>
+      <!-- 
+      rairly used feature, but makes the counter calculated once and then
+      doesn't change: v-once
+      -->
+      <p v-once>Starting Counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
       <!-- Can get default argument values using this format-->
       <!--<input type="text" v-on:input="setName">-->
