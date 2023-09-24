@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Dynamic Styling</h1>
+    </header>
+    <section id="styling">
+      <!--
+        Here we are associating a click event with a box via v-on or @ to
+        the boxSelected function.   We also bind (v-bind or :) a style
+        using a special format.   css is normally border-color, but we
+        use a special camel case format with a ternary operator (if then)
+      -->
+      <div class="demo"
+          :style="{borderColor: boxASelected ? 'red' : '#ccc'}"
+          @click="boxSelected('A')">
+      </div>
+      <!--
+        Here we have defined an active css class.   We bind to class and use
+        a special format.   demo is always a class as it is set to true, but
+        active is part of the class based upon the javacript variable
+        boxASelected.   Much more readable.
+      -->>
+      <div
+          :class="{demo: true, active: boxBSelected}"
+          @click="boxSelected('B')">
+      </div>
+      <!--
+        This is the final and best format.   We have a standard class which
+        specifies classes that are part of it and do not change.   We then
+        bind another class using :class with dynamic styling
+      -->
+      <div
+          class="demo"
+          :class="{active: boxCSelected}"
+          @click="boxSelected('C')">
+      </div>
+      <!--
+        With this one, we use a computed function to add classes, useful for
+        more complex problems.
+        Not a must do unless have very complex styling.
+      -->
+      <div
+          class="demo"
+          :class="boxDClasses"
+          @click="boxSelected('D')">
+      </div>
+      <!--
+        There is also an array syntax for defining which classes are included:
+      -->
+      <div
+          :class="['demo', {active: boxESelected}]"
+          @click="boxSelected('E')">
+      </div>
+    </section>
+  </body>
+</html>
