@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Course Goals</h1>
+    </header>
+    <section id="user-goals">
+      <h2>My course goals</h2>
+      <!-- We 2 way bind this input to the enteredGoal variable -->
+      <input type="text" v-model="enteredGoal"/>
+      <button @click="addGoal">Add Goal</button>
+      <!--
+        v-if - conditional rendering.   The <p> is only rendered if the formula evaluates to true,
+               so this is invisible unless the array length is zero.
+               v-if must point to a true/false value, but it can be a variable, method, computed etc.
+        
+        v-show - there is an alternative called v-show.   It doesn't have the else, else-if
+               functionality and so is single use.   v-if adds or removes the html, v-show just
+               turns the display on/off.   Use v-show if visibility changes a lot as quicker.
+      -->
+      <p v-if="goals.length === 0">No goals have been added yet - please start adding some!</p>
+      <!--
+        v-else must follow directly after a v-if statement and it is like a typical if statement
+        This section of code will display one or the other.
+        There is also a v-else-if="" statement that can be used to conditionally display html
+      -->
+      <ul v-else>
+        <!--
+          Here we use a v-for (for loop) go go through the array.
+          Can use goal of goals (more javascript'ish), but generally use in
+        -->
+        <li v-for="goal in goals">{{ goal }}</li>
+      </ul>
+    </section>
+  </body>
+</html>
