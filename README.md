@@ -116,7 +116,7 @@ the html.   You can also do basic calculations within them.   Examples:
 {{ myVariable }}
 {{ outputOfFunction() }}
 {{ outputOfFunction }}
-{{{ 1 + 1 }}}
+{{ 1 + 1 }}
 ```
 
 #### __v-html__
