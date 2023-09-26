@@ -129,6 +129,8 @@ There are lots of events such as:
 
 ```
 v-on:input   v-on:keydown.enter     etc
+@click.stop - prevents click working on an element which is inside something that
+              does have @click
 ```
 
 WARNING - Try to avoid making data variable names, method, computed function names etc
