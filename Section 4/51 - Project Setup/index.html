@@ -29,15 +29,41 @@
           <div class="healthbar__value" :style="playerBarStyles"></div>
         </div>
       </section>
-      <section id="controls">
+      <section class="container" v-if="winner"> <!-- display once winner/loser or draw evaluated -->
+        <h2>Game Over!</h2>
+        <h3 v-if="winner === 'draw'">Draw</h3>
+        <h3 v-else-if="winner === 'player'">You won</h3>
+        <h3 v-else>You lost</h3>
+        <button @click="startGame">Start New Game</button>
+      </section>
+      <section id="controls" v-else>    <!-- controls do not display when winner is declared -->
         <button @click="attackMonster">ATTACK</button>
         <button :disabled="mayUseSpecialAttack" @click="specialAttachMonster">SPECIAL ATTACK</button>
         <button @click="healPlayer">HEAL</button>
-        <button>SURRENDER</button>
+        <button @click="surrender">SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="logMessage in logMessages">
+
+            <!-- special class for player/monster and the player/monster who we refer to-->
+            <span :class="{'log--player': logMessage.actionBy==='player', 'log--monster': logMessage.actionBy==='monster'}">
+              {{ logMessage.actionBy }}
+            </span>
+
+            <!-- display heal or damage and some formatting-->
+            <span v-if="logMessage.actionType === 'heal'">
+              heals himself for 
+              <span class="log--heal">{{ logMessage.actionValue }}</span>
+            </span>
+            <span v-else>
+              attacks and deals 
+              <span class="log--damange">{{ logMessage.actionValue }}</span>
+            </span>
+
+          </li>
+        </ul>
       </section>
     </div>
   </body>
