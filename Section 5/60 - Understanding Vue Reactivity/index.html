@@ -19,6 +19,12 @@
     <section id="app">
       <h2>How Vue Works</h2>
       <input type="text" @input="saveInput">
+      <!--
+      He talks about ref's.   This is a view property that lets view know that you want access
+      to the element as and when you need it.   There is then a special way of accessing the data
+      within app.js
+    -->
+      <input type="text" ref="userText">
       <button @click="setText">Set Text</button>
       <p>{{ message }}</p>
     </section>
