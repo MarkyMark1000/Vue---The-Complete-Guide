@@ -85,3 +85,30 @@ to what we have been using previously.   There is also an App.vue file that cont
 3 sets of data.   <Template>, <Script> and <Style>.   At this point we install a
 VSCode Extension called 'Vetur', which makes this template file coloured and more
 readable.
+
+I had all sorts of problems trying to get the development server up and running with
+this.   These are solutions that I tried:
+
+https://sentry.io/answers/how-do-i-resolve-cannot-find-module-error-using-node-js/#:~:text=Make%20sure%20the%20dependency%20is%20installed%20in%20the%20correct%20place&text=If%20the%20dependency%20is%20in,the%20module%20import%20is%20correct.
+```
+sudo rm -rf node_modules
+sudo rm -f package-lock.json
+sudo npm cache clean --force
+sudo npm install
+```
+
+https://stackoverflow.com/questions/66215112/syntax-error-error-no-eslint-configuration-found-in-when-i-tried-to-npm-run
+```
+npm init @eslint/config
+```
+
+NONE OF THIS SEEMED TO WORK.  WHAT I DID WAS BASICALLY CREATE A NEW VUE PROJECT
+FROM SCRATCH AND THEN ADJUSTED IT TO LOOK LIKE HIS.   IT IS CALLED my-new-vue-project.
+
+
+APARENTLY THERE IS NOW AN ALTERNATIVE WAY OF SETTING UP VUE PROJECTS:
+
+  ```
+  npm init vue
+  ```
+  Also, use the Volar extension instead of Vetur
