@@ -10,12 +10,12 @@
         component.
     -->
     <li>
-        <h2>{{ name }}{{ friendIsFavourite ? '(favourite)' : '' }}</h2>
+        <h2>{{ name }}{{ isFavourite ? '(favourite)' : '' }}</h2>
         <button @click="toggleDetails">
-            {{ detailsAreVisible ? 'Hide' : 'Show'}} Details
+            {{ isFavourite ? 'Hide' : 'Show'}} Details
         </button>
         <button @click="toggleFavourite">
-            {{ friendIsFavourite ? 'Unfavourite' : 'Favourite'}}
+            {{ isFavourite ? 'Unfavourite' : 'Favourite'}}
         </button>
         <ul v-if="detailsAreVisible">
             <li><strong>Phone:</strong> {{ phoneNumber }}</li>
@@ -45,6 +45,10 @@ export default {
         String, Number, Boolean, Array, Object, Date, Function, Symbol
     */
     props: {
+        id: {
+            type: String,
+            required: true
+        },
         name: {
             type: String,
             required: true
@@ -70,10 +74,9 @@ export default {
         }
     },
     data() {
-        console.log(this.name + ': this.isFavourite: ' + this.isFavourite);
         return {
             detailsAreVisible: false,
-            friendIsFavourite: this.isFavourite,
+            // friendIsFavourite: this.isFavourite,
         };
     },
     methods: {
@@ -81,7 +84,12 @@ export default {
             this.detailsAreVisible = !this.detailsAreVisible;
         },
         toggleFavourite() {
-            this.friendIsFavourite = !this.friendIsFavourite;
+            // this.friendIsFavourite = !this.friendIsFavourite;
+
+            // This is adjusted so that the component can emit an event
+            // to the parent app.   We use '-' and camel case notation.
+            console.log('about to emit toggle-favourite ' + this.id);
+            this.$emit('toggle-favourite', this.id);
         }
     }
 };

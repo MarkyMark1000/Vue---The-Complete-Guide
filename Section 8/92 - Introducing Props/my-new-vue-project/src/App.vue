@@ -12,15 +12,27 @@
 
         KEY POINT: You can use vue features like v-for or binding within
         the template when passing data to components.
+
+        Passing is-favourite down using binding, still transfers the variable
+        once, but it if the toggle favourite button is hit, it does not update
+        it in the parent App, App.vue
       -->
       <friend-contact
         v-for="friend in friends"
         :key="friend.id"
+        :id="friend.id"
         :name='friend.name'
         :phone-number='friend.phone'
         :email-address='friend.email'
-        :is-favourite='true'
+        :is-favourite='friend.isFavourite'
+        @toggle-favourite='toggleFavouriteStatus'
       ></friend-contact>
+      <!--
+        We bind the toggle-favourite event that is sent from the component to
+        this app to the method in the app called toggleFavouriteStatus.   This
+        combined with $event(...) in the component creates a way for components
+        to update data in the parent App.
+      -->
   </section>
 </template>
 
@@ -38,16 +50,26 @@ export default {
                   id: 'manuel',
                   name: 'Manuel Lorenz',
                   phone: '01234 567891',
-                  email: 'manuel@localhost.com'
+                  email: 'manuel@localhost.com',
+                  isFavourite: true
               },
               {
                   id: 'julie',
                   name: 'Julie Jones',
                   phone: '09876 543210',
-                  email: 'julie@localhost.com'
+                  email: 'julie@localhost.com',
+                  isFavourite: false
               },
           ]
       };
+  },
+  methods: {
+    toggleFavouriteStatus(friendId) {
+      console.log('about to toggleFavouriteStatus');
+      // find the friend in the javascript array
+      const foundFriend = this.friends.find(friend => friend.id ===friendId);
+      foundFriend.isFavourite = !foundFriend.isFavourite;
+    }
   }
 }
 </script>
