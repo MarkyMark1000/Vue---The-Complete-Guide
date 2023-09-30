@@ -1,6 +1,7 @@
 <template>
   <section>
       <header><h1>My Friends</h1></header>
+      <new-friend @add-contact="addContact"></new-friend>
       <!--
         We add the friend-contact component that is imported in main.js and
         defined within ./components/FriendContact.vue
@@ -26,12 +27,14 @@
         :email-address='friend.email'
         :is-favourite='friend.isFavourite'
         @toggle-favourite='toggleFavouriteStatus'
+        @delete="deleteContact"
       ></friend-contact>
       <!--
         We bind the toggle-favourite event that is sent from the component to
         this app to the method in the app called toggleFavouriteStatus.   This
         combined with $event(...) in the component creates a way for components
         to update data in the parent App.
+        Bind delete event from NewFriend.vue to the deleteContact method
       -->
   </section>
 </template>
@@ -42,7 +45,9 @@ pass to the Vue app.
 -->
 
 <script>
+import NewFriend from './components/NewFriend.vue';
 export default {
+  components: { NewFriend },
   data(){
       return {
           friends: [
@@ -69,6 +74,24 @@ export default {
       // find the friend in the javascript array
       const foundFriend = this.friends.find(friend => friend.id ===friendId);
       foundFriend.isFavourite = !foundFriend.isFavourite;
+    },
+    addContact(name, phone, email) {
+      /*
+      This listens to the add-contact event bound to new-friend, which
+      is emitted from the NewFriend component.
+      */
+      console.log('about to adjust friends array');
+      const newFriendContact = {
+        id: new Date().toISOString(),
+        name: name,
+        phone: phone,
+        email: email,
+        isFavourite: false
+      };
+      this.friends.push(newFriendContact);
+    },
+    deleteContact(friendId) {
+      this.friends = this.friends.filter(friend => friend.id !== friendId);
     }
   }
 }
@@ -112,7 +135,8 @@ export default {
     list-style: none;
   }
 
-  #app li {
+  #app li,
+  #app form {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     margin: 1rem auto;
     border-radius: 10px;
@@ -146,4 +170,18 @@ export default {
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
   }
 
+/* New styles added for NewFriend */
+#app input {
+  font: inherit;
+  padding: 0.15rem;
+}
+#app label {
+  font-weight: bold;
+  margin-right: 1rem;
+  width: 7rem;
+  display: inline-block;
+}
+#app form div {
+  margin: 1rem 0;
+}
 </style>
