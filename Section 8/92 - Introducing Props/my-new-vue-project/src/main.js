@@ -3,6 +3,7 @@ import App from './App.vue';
 
 // We need to import the friend contact code and template
 import FriendContact from './components/FriendContact.vue';
+import NewFriend from './components/NewFriend.vue';
 
 const app = createApp(App);
 
@@ -10,5 +11,6 @@ const app = createApp(App);
 // directory.   You can then use friend-contact's within the app.vue
 // template.
 app.component('friend-contact', FriendContact);
+app.component('new-friend', NewFriend);
 
 app.mount('#app');

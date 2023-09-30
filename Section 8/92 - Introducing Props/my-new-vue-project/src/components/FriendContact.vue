@@ -12,7 +12,7 @@
     <li>
         <h2>{{ name }}{{ isFavourite ? '(favourite)' : '' }}</h2>
         <button @click="toggleDetails">
-            {{ isFavourite ? 'Hide' : 'Show'}} Details
+            {{ detailsAreVisible ? 'Hide' : 'Show'}} Details
         </button>
         <button @click="toggleFavourite">
             {{ isFavourite ? 'Unfavourite' : 'Favourite'}}
@@ -21,6 +21,8 @@
             <li><strong>Phone:</strong> {{ phoneNumber }}</li>
             <li><strong>Email:</strong> {{ emailAddress }}</li>
         </ul>
+        <!-- Here we emit the delete event directly in the button -->
+        <button @click="$emit('delete', id)">Delete</button>
     </li>
 </template>
 
@@ -73,6 +75,33 @@ export default {
             */
         }
     },
+    /*
+        Emits contains a list of events that we can emit back up to the
+        main app in App.vue
+        emits: [
+            'toggle-favourite'
+        ],
+        However you can be more specific and use an object
+    emits: {
+        'toggle-favourite': function(id) {
+            if(id){
+                return true;
+            }
+            else{
+                console.warn('id missing from toggle-favourite');
+                return false;
+            }
+        }
+    },
+
+    CHAPTER 99 HAS SOME NOTES ON TOPICS THAT MAY BE USEFUL:
+    Prop Fallthrough and Binding All Props on a Component.
+    I think they are about events passing through if not declared
+    and passing objects (dic) instead of individual values.
+    */
+    emits: [
+            'toggle-favourite', 'delete'
+        ],
     data() {
         return {
             detailsAreVisible: false,
