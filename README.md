@@ -582,3 +582,8 @@ We can then use this in sub components using something like this:
 
 KEY: Provide() goes in the high level app/component and Inject: goes into the
     sub components.
+
+
+IMPORTANT - NEXT
+Try to figure out how to get rid of the sudo/admin problem, it is a real
+pain in the backside.
