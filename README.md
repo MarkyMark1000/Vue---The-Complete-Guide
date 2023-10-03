@@ -19,6 +19,11 @@ npm install             (or sudo npm ....)
 npm run build           (or sudo npm ....)
 ```
 
+This can be very useful if create command doesn't work without errors (cache folder contains root owned files):
+
+```
+sudo npm cache clean --force
+```
 
 ### Javascript
 ---
@@ -335,6 +340,13 @@ npm update -g @vue/cli   (or sudo npm ...)
 
 ```
 vue create vue-first-app   (or sudo vue ...)
+```
+
+If this command fails with errors (cache folder contains root owned files) this
+command can be very useful and may well make everything else work:
+
+```
+sudo npm cache clean --force
 ```
 
 Now you can go into the vue-first-app directory and spin up the web-server
