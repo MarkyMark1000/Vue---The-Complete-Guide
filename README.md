@@ -22,7 +22,11 @@ npm run build           (or sudo npm ....)
 This can be very useful if create command doesn't work without errors (cache folder contains root owned files):
 
 ```
+// clears cache of out of date files
 sudo npm cache clean --force
+
+// reinstalls npm with latest version
+npm install -g npm
 ```
 
 ### Javascript
