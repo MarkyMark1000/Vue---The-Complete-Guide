@@ -11,7 +11,16 @@
 </template>
 
 <script>
+// Local Declaration
+import BadgeList from './components/BadgeList.vue';
+import UserInfo from './components/UserInfo.vue';
+import TheHeader from './components/TheHeader.vue';
+
 export default {
+  // Local Declaration
+  components: {
+    BadgeList, UserInfo, TheHeader
+  },
   data() {
     return {
       activeUser: {
