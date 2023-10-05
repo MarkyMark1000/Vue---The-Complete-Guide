@@ -46,6 +46,7 @@ can be used to dynamically format the page:
 
 ```
 const app = Vue.createApp({
+    components: {},
     props: [] or {},
     data() { return {}; },
     methods: {},
@@ -55,6 +56,9 @@ const app = Vue.createApp({
 });
 ```
 
+__components__: When using the npm form, this declares components imported locally
+    into the script section of the template.   You typically import the component
+    file at the top of the script section as well.
 __props__: These are using in components and declare attributes that can be passed
     down to the component.
 __data__: This returns a dictionary of variables that we will associate with this
