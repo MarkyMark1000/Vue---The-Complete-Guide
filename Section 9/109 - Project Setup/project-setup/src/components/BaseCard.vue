@@ -8,11 +8,22 @@
                 html that will effectively go into slot.
             </base-card>
         -->
+        <header v-if="$slots.header">   <!-- only display if header is provided -->
+            <slot name="header">
+                <h2>Default: header missing</h2>
+            </slot>
+        </header>
         <slot></slot>
     </div>
 </template>
 
 <style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 div {
   margin: 2rem auto;
   max-width: 30rem;

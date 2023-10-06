@@ -1,11 +1,15 @@
 <template>
   <section>
     <base-card>
-      <div>
+      <!-- here we inject the html into the header slot in base-card -->
+      <template #header>
         <h3>{{ fullName }}</h3>
         <base-badge :type="role" :caption="role.toUpperCase()"></base-badge>
-      </div>
-      <p>{{ infoText }}</p>
+      </template>
+      <!-- remaining html goes into last/remaining slot - we explicity set it here -->
+      <template #default>
+        <p>{{ infoText }}</p>
+    </template>
     </base-card>
   </section>
 
@@ -16,13 +20,3 @@ export default {
   props: ['fullName', 'infoText', 'role'],
 };
 </script>
-
-<style scoped>
-
-
-section header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-</style>
