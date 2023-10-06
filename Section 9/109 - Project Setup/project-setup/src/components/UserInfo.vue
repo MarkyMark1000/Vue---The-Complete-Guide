@@ -8,6 +8,7 @@
       <p>{{ infoText }}</p>
     </base-card>
   </section>
+
 </template>
 
 <script>
