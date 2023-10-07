@@ -604,6 +604,163 @@ KEY: Provide() goes in the high level app/component and Inject: goes into the
     sub components.
 
 
-IMPORTANT - NEXT
-Try to figure out how to get rid of the sudo/admin problem, it is a real
-pain in the backside.
+
+
+
+
+
+
+
+
+#### Global vs Local Registration
+
+Originally in this project the components were all imported within main.js, but
+it is possible to import them within App.vue or in fact any other component, within
+the javascript.   You can use a format such as this:
+
+```
+components: {
+    'the-header': TheHeader
+}
+or
+components: {
+    TheHeader
+}
+```
+(still allows you to use <the-header><the-header> format within the template, but
+you can also use <TheHeader> or <TheHeader />)
+
+You also need to import the component in the script section, eg
+```
+import TheHeader from './components/TheHeader.vue';
+```
+
+#### Scoped Styling (Good Practice in non App.vue components)
+
+css defined within the <style> section of any component applies globally.   If you
+want to limit the scope of the style to the template the <style> tag is within you
+use this:
+```
+<style scoped>
+```
+
+When rendered this gives your html a unique identifier and modifies the css to
+use this:
+```
+<header data-v-988832>
+```
+
+#### Slots
+
+If you want to wrap some html with another component for formatting as an example:
+```
+<my-wrapper-component>
+...html....
+</my-wrapper-component>
+```
+
+Use <slot></slot> within the my-wrapper-component html to represent where the html
+goes.
+You can have more than one slot pair within a component, but only one 'default'
+does not need a name, eg:
+```
+<slot name="header"></slot>
+```
+
+To inject html into a 'named' slot, you use v-slot with : not equal:
+```
+<template v-slot:header>
+.....html to inject into header <slot> .....
+</template>
+```
+
+v-slot:default to specify the default slot.
+
+You can also specify default html for the slot, eg:
+```
+<slot name="header">
+   Header is missing
+<slot>
+```
+
+$slots is available within javascript and you can use it to only display
+html if a slot is provided, eg:
+```
+<!-- only shows if header html is injected -->
+<header v-if="$slots.header"> .... </header>
+```
+
+There is a shortcut for v-slot.   Use #, eg <template #header>
+
+
+THERE IS SOMETHING ON SCOPED SLOTS (see tutorial 116) WHICH DIDN'T WORK ON
+MY COMPUTER.   IT IS A WAY FOR A PARENT COMPONENT TO PASS HTML TO A SUB
+COMPONENT THAT CONTAINS <slot></slot> BUT THE PARENT HAS ACCESS TO VARIABLES
+USED WITHIN THE SUB-COMPONENT.
+
+You might see things like:
+```
+<template #default="slotProps">
+then access slotProps.item or slotProps['something']
+<course-goals #default="slotProps"></course-goals>
+```
+
+#### Dynamic Components
+
+Within vue templates you can add the component tab and get it to switch between
+displaying different components, eg:
+```
+<component :is="activeComponent"></component>
+```
+
+The component displayed is taken from the activeComponent variable, which can
+be changed by buttons etc.
+
+There is a problem with this.   When you switch between components, they are
+destroyed, so if you have something like an input box, the entered text will
+got to zero.   You can solve this by wrapping it in <keep-alive>:
+```
+<keep-alive>
+    <component :is="activeComponent"></component>
+</keep-alive>
+```
+
+#### Teleport
+
+See video 119 where he created a dialog using a new vue component and <slot>
+instead of an alert button.   POTENTIALLY VERY USEFUL AND INTERESTING!
+
+The html went in the wrong place semantically, so he demonstrated using the
+teleport tags to move the postion of the dialog box to say the body tag or
+specific css selectors:
+```
+<teleport to="body">
+    <dialog>
+        <slot><slot>
+    </dialog>
+</teleport>
+```
+
+HE DID NOT SHOW YOU HOW TO OPEN IT IN ITS OWN BOX, SO RESEARCH THIS AT
+SOME POINT !!!
+
+#### Fragments
+
+Top level <template> can have multiple elements, in vue2, everything needed
+one element, eg <div></div>
+
+#### Style Guide
+
+Vue has some strongly recommended style guides that it might be worth getting
+used to.   Google 'Vue Style Guides' or try this:
+
+https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files
+
+He also discussed directory structures.   It is a good plan to add sub
+directories to the components directory to make the components easier to
+find and manage.
+
+THIS COULD BE WORTH WATCHING AT SOME POINT AND UPDATING THE NOTES, IT SHOWS
+YOU HOW TO ADD LINTING TO A PROJECT, ALSO VSCODE AND USE IT:
+https://www.youtube.com/watch?v=FZ0YtjgO0DQ
+
