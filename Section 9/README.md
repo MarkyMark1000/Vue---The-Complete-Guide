@@ -89,3 +89,59 @@ You might see things like
 <template #default="slotProps"> then access slotProps.item or slotProps['something']
 You could also put it in the component name, eg
 <course-goals #default="slotProps"></course-goals>
+
+It's an advanced and neich feature.
+
+## Dynamic Components
+---
+
+Within vue templates you can add the component tab and get it to switch between
+displaying different templates, eg:
+
+<component :is="activeComponent"></component>
+
+The component displayed is linked to the variable activeComponent, which can
+be changed by buttons etc.
+
+There is a problem with this.   When you switch between components, they are
+destroyed, so if you have something like an input box, the entered text will
+got to zero.   You can solve this by wrapping it in <keep-alive>:
+
+<keep-alive>
+    <component :is="activeComponent"></component>
+</keep-alive>
+
+He went through an example in video 119 where he created a dialog using a
+new vue component and <slot> instead of an alert button.   The html ended
+up going in the wrong place semantically, so he demonstrated using the
+teleport tags to move the postion of the dialog box:
+
+This moves the dialog html at the start of the body element.   You can use
+any css selectors.
+
+<teleport to="body">
+    <dialog>
+        <slot><slot>
+    </dialog>
+</teleport>
+
+HE DID NOT SHOW YOU HOW TO OPEN IT IN ITS OWN BOX, SO RESEARCH THIS AT
+SOME POINT !!!
+
+## Fragments
+---
+
+Top level <template> can have multiple elements, in vue2, everything needed
+one element, eg <div></div>
+
+## Style Guide
+---
+
+Vue has some strongly recommended style guides that it might be worth getting
+used to.   Google 'Vue Style Guides' or try this:
+
+https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files
+
+He also discussed directory structures.   It is a good plan to add sub
+directories to the components directory to make the components easier to
+find and manage.
