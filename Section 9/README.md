@@ -145,3 +145,14 @@ https://vuejs.org/style-guide/rules-strongly-recommended.html#component-files
 He also discussed directory structures.   It is a good plan to add sub
 directories to the components directory to make the components easier to
 find and manage.
+
+THIS COULD BE WORTH WATCHING AT SOME POINT AND UPDATING THE NOTES, IT SHOWS
+YOU HOW TO ADD LINTING TO A PROJECT, ALSO VSCODE AND USE IT:
+https://www.youtube.com/watch?v=FZ0YtjgO0DQ
+
+
+
+
+
+
+        NEXT UPDATE THE MAIN README.md FILE !!!!!!!!!
