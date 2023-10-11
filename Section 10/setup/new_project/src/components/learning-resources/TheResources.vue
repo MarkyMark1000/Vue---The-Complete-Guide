@@ -13,7 +13,9 @@
         :mode="selectedTab === 'add-resource' ? null : 'flat'">
             Add Resource
         </base-button>
-        <component :is="selectedTab"></component>
+        <keep-alive>
+            <component :is="selectedTab"></component>
+        </keep-alive>
     </base-card>
 </template>
 
@@ -47,12 +49,27 @@ export default {
     },
     provide() {
         return {
-            resources: this.storedResources
+            resources: this.storedResources,
+            addResource: this.addResource
         };
     },
     methods: {
         setSelectedTab(new_tab) {
             this.selectedTab = new_tab;
+        },
+        addResource(title, description, link){
+            console.log('in addResource');
+            
+            this.selectedTab = 'stored-resources';
+
+            const new_resource = {
+                id: new Date().toISOString(),
+                title: title,
+                description: description,
+                link: link
+            };
+            this.storedResources.unshift(new_resource);
+            
         }
     }
 }
