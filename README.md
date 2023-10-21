@@ -29,6 +29,12 @@ sudo npm cache clean --force
 npm install -g npm
 ```
 
+There are a lot of video's about setting up debugging environments within VS Code and the default
+debugger statement doesn't work due to linting.   If you want to debug use this instead:
+```
+debugger; // eslint-disable-line
+```
+
 ### Javascript
 ---
 
@@ -77,6 +83,11 @@ __watch__: This is a dictionary of functions with the names of variables or
 __emits__: Used in component to declare what events the component can raise and so
     what the parent app/component can listen for with @.   It is used in conjunction
     with this.$event('blah-blah', ...)
+__provide__: Used when you don't want to use props and emits on every component and
+        sub component.   Can save time, but can be difficult to track down where
+        change came from.
+__inject__: Used with __provide__, it provides a reference to the provided variable
+        or function.
 
 Within a method, computed function or watch, you must refer to the variables
 using 'this':
