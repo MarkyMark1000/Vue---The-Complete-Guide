@@ -775,3 +775,29 @@ THIS COULD BE WORTH WATCHING AT SOME POINT AND UPDATING THE NOTES, IT SHOWS
 YOU HOW TO ADD LINTING TO A PROJECT, ALSO VSCODE AND USE IT:
 https://www.youtube.com/watch?v=FZ0YtjgO0DQ
 
+
+Interesting Points from Chapter 11
+
+v-model will look at the input type (number, text etc) and convert the javascript
+variable into that variable type.   Using $refs does not and returns a string.
+Also v-model has some input modifiers that can be useful, eg
+    v-model.trim, v-model.number, v-model.lazy (less frequent updates)
+  
+You need a v-model on each checkbox/radio button group with the same name to point at the
+same variable.
+
+For checkboxes you need an array, which will end up with the values checked.   Also you
+need to add distinct values to each of the checkboxes/radio buttons in the html so that
+they have a value to assign to it.
+If you work with a single checkbox in a group, then you can use a single variable rather
+than an array and it will need/have a value of true or false.
+
+He has an example of validating user input using the blur event on the input box.
+
+##### Ch 147 - Useful/Interesting:
+There is a really interesting point here.   he was pointing out that it is possible to bind
+things (say in TheForm.vue) to sub component values using v-model.   You need to have specific
+props/events within the sub-component:
+    'modelValue' and 'update:modelValue'
+You then use modelValue within the component and emit a 'update:modelValue' event when
+necessary.
