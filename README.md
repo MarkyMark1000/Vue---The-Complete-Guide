@@ -951,7 +951,7 @@ notes:
 ##### Installation
 ---
 
-@next is the latest version, but yo uinstall the router using:
+@next is the latest version, but you uinstall the router using:
 ```
 npm install --save vue-router@next
 ```
@@ -1221,3 +1221,6 @@ router.js and then importing it into main.   Makes the code more distinct and re
 HE ALSO SUGGESTED HAVING A pages AND components DIRECTORY SO THAT WE CAN ADD SOME COMPONENTS
 INTO THE pages DIRECTORY, WHICH ARE ROUTER SPECIFIC AND SOME INTO THE components DIRECTORY
 WHICH ARE RE-USABLE COMPONENTS.
+
+MODAL THAT WORKS - VIDEO 192 RESOURCES !!!
+
