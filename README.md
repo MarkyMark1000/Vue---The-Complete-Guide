@@ -951,7 +951,7 @@ notes:
 ##### Installation
 ---
 
-@next is the latest version, but yo uinstall the router using:
+@next is the latest version, but you uinstall the router using:
 ```
 npm install --save vue-router@next
 ```
@@ -1221,3 +1221,80 @@ router.js and then importing it into main.   Makes the code more distinct and re
 HE ALSO SUGGESTED HAVING A pages AND components DIRECTORY SO THAT WE CAN ADD SOME COMPONENTS
 INTO THE pages DIRECTORY, WHICH ARE ROUTER SPECIFIC AND SOME INTO THE components DIRECTORY
 WHICH ARE RE-USABLE COMPONENTS.
+
+MODAL THAT WORKS - VIDEO 192 RESOURCES !!!
+
+#### Transitions and Animation
+
+There is a view specific element used for transitions.   It has some css classes that can
+be specified to control the behaviour such as *-enter-from, *-enter-to and *-enter-active, 
+*-leave-from, *-leave-to and *-leave-active.   They can be used to animate the addition
+and removal of elements.   It is useful when you use things like v-if.
+
+You should only have one element within the transition UNLESS you can guarantee that only
+one element will be visible at one time.
+
+You can make the transition work with classes such as .para-enter-from rather than
+.v-enter-from by giving the transiton a name, eg:
+```
+<transition name="para">....</transition>
+```
+
+You can specify exact classes to use instead of .v-enter-from in the following way:      
+```
+<transition enter-to-class="some-class" enter-active-class="...">
+```
+
+You can tell Vue not to look for these css classes (can use javascript) using this:
+```
+<transition :css="false">...</transition>
+```
+
+Within the original version of the App in chapter 14 he has plenty of examples of
+using css to animate or transition data.    Using keyframes.   He also has an example
+where you can specify specific javascript functions to run when entering etc:
+```
+<transition
+  :css="false"
+  @before-enter="beforeEnter"
+  @enter="enter"
+  @after-enter="afterEnter"
+  @before-leave="beforeLeave"
+  @after-leave="afterLeave"
+  @leave="leave"
+  @enter-cancelled="enterCancelled"
+  @leave-cancelled="leaveCancelled">
+```
+
+It is possible to transition elements of a group, such as list items within an unordered
+list using a similar but slightly different Vue element called <transition-group>:
+```
+<transition-group tag="ul" name="user-list">
+    <li v-for="user in users" :key="user" @click="removeUser(user)">
+        {{  user }}
+    </li>
+</transition-group>
+```
+
+You need to remove the element that they were rendered in originally (<ul>)
+and specify this in the 'tag' attribute of the transition-group.
+Again name can be used to control which css classes are used to control the
+transition.
+
+Finally you can also transition between router views.   There is some unusual
+syntax for this with the component:
+```
+<router-view v-slot="slotProps">
+    <transition name="fade-button" mode="out-in">
+        <component :is="slotProps.Component"></component>
+    </transition>    
+</router-view>
+```
+
+Also, to prevent jumping around at the start, you might want to only mount the
+app when the router is ready.   Adjust main.js to use this:
+```
+router.isReady().then(function() {
+    app.mount('#app');
+});
+```
