@@ -1,32 +1,24 @@
 import { createApp } from 'vue';
-import { createStore } from 'vuex';
 
 import App from './App.vue';
 
 /*
-After doing a Vue project, this concept would have been very useful.   A global
-state that can be updated by any component, ie the counter.   It is possible but
-bad practice to update the state directly.   We try to create mutations that
-can be called to change the state using something like this:
-        this.$store.commit('increment');
-Mutations are considered good practice rather than changing state within code.
+It is possible to split large stores into seperate components:
+
+namespaced allows you to specify that state, mutations etc are
+part of a namespace, which is defined by the statement for
+including the module, ie:
+    modules: {
+        numbers: counterModule,
+    },
+You would then access these features using numbers/increment etc
 
 */
-const store = createStore({
-    state() {
-        return {
-            counter: 0
-        };
-    },
-    mutations: {
-        increment(state) {
-            state.counter = state.counter+2;
-        },
-        increase(state, payload) {
-            state.counter += payload.value;
-        }
-    }
-});
+
+// THERE IS A GOOD VIDEO 224 THAT SHOWS HOW TO BREAK THE CODE DOWN
+// INTO A store FOLDER AND CREATE THE vuex SYSTEM.
+
+import store from './store/index.js';
 
 const app = createApp(App);
 

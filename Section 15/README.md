@@ -1,6 +1,14 @@
 # VUEX
 ---
 
+### QUICK NOTE
+---
+
+With respect to his challenge, ie video 225 onwards, I didn't do it here.
+
+### NOTES ON VUEX
+---
+
 To install, run this:
 ```
 npm install --save vuex@next
