@@ -1298,3 +1298,174 @@ router.isReady().then(function() {
     app.mount('#app');
 });
 ```
+
+#### VUEX
+---
+
+This is quite an important topic.   When I tried my first Vue app, I had difficulty
+transitioning information between different components.   Vuex is a way of having
+the state managed in an almost global level.   You then provide a set of mutations,
+getters, actions for updating the global state.
+[An action allows asyncronous tasks, mutations do not.   It is good practice for
+a component to call an action then a mutation afterwards when doing async tasks.]
+
+These are the basic setup instructions for Vuex:
+
+To install, run this:
+```
+npm install --save vuex@next
+```
+
+You need to add some code into main.js to set this up:
+```
+import { createStore } from 'vuex';
+
+....
+
+const store = createStore({
+    state() {
+        return {
+            counter: 0
+        };
+    }
+});
+
+...
+
+app.use(store);
+```
+
+Good Practice at the Start:
+There is a good video (224) that shows how to break large vuex
+based projects down into a store folder.   You then create an
+index.js, mutations.js, getters.js and actions.js file.   After
+that you can use folders to break this global list into sub sections.
+
+```
+const store = createStore({
+    state() {
+        // Global state variables.
+        return {... list of variables ...};
+    },
+    mutations: {
+        // Mutations must be syncronous
+        ... list of functions ...
+    },
+    actions: {
+        // Actions are for anyn code (eg http request).   It is good
+        // practice to call a mutation once a mutation is complete.
+        ... list of functions ...
+    },
+    getters: {
+        // Getters are for retrieving values
+        ... list of functions ...
+    }
+});
+```
+
+A mutation might have code like this:
+```
+increment(state) {
+    state.counter = state.counter+10;
+},
+increase(state, payload) {
+    state.counter += payload.value;
+},
+```
+They can then be called from anywhere within the Vue project using something like this:
+```
+this.$store.commit('increment');
+```
+
+These are examples of getters:
+```
+finalCounter(state) {
+    return state.counter;   // use state to return a value.
+},
+normalizedCounter(state, getters) {
+    const finalCounter = getters.finalCounter+10; // call another getter
+    return finalCounter;
+},
+```
+You can then access getters using something like this:
+```
+this.$store.getters.normalizedCounter
+```
+
+An action might work like this:
+```
+increase(context, payload) {
+    // some async code 
+    // call a mutation once the async code is finished, eg:
+    context.commit('increase', payload);
+    context.commit('setAuth', {isAuth: true});
+},
+```
+You would then call the action using dispatch, something like this:
+```
+this.$store.dispatch('increment');
+```
+
+I believe it is possible to do things like dispatch another action
+within an action, access getters or mutations.
+
+There are other forms of calling these getters, mutations etc:
+```
+this.$store.commit({
+  type: 'increase',
+  value: 10
+});
+```
+
+There is a concept of namespacing large stores of getters, mutations
+and actions into different areas.   You use the modules statement, eg:
+```
+modules: {
+    numbers: counterModule,
+}
+```
+
+The 'numbers' would then be the new namespace and counterModule would
+be a dictionary similar to the original store.   The namespaced argument
+restricts access to the different components:
+```
+export default {
+    namespaced: true,           // limits how data is accessed
+    state() {...}
+    ......
+```
+SEE VIDEO 224 ON SPLITTING A LARGE SYSTEM UP INTO SEPERATE FOLDERS.
+
+When you use namespaces, you call/access the getters etc from within
+a component in a slightly different way, eg:
+```
+this.$store.getters['numbers/normalizedCounter'];
+```
+
+In addition to this, it is possible to map getters, actions etc within
+the components so that you don't have to create seperate computed properties
+whenever you want to call them.   You import some specific functions and do
+something like this:
+```
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+
+// These go in the computed section of the component
+...mapGetters(['finalCounter'])
+...mapGetters('numbers',['finalCounter'])     // numbers namespace
+
+// These go in the method section of the component
+...mapActions({
+            inc: 'numbers/increment',       // alias increment to inc
+            increase: 'numbers/increase'
+        })
+```
+
+Sometimes you might want to access the root state from within a namespaced
+module.   You cannont normally access this, because they are seperate, but
+there is a way around this:
+```
+testAuth(state, getters, rootState, rootGetters) { ... }
+  // use rootState and rootGetters and _ for any unused argument variables
+  // to avoid errors.
+```
