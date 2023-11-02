@@ -32,3 +32,11 @@ const store = createStore({
 
 app.use(store);
 ```
+
+Good Practice at the Start:
+There is a good video (224) that shows how to break large vuex
+based projects down into a store folder.   You then create an
+index.js, mutations.js, getters.js and actions.js file.   After
+that you can use folders to break this global list into sub sections.
+
+
