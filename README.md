@@ -1469,3 +1469,25 @@ testAuth(state, getters, rootState, rootGetters) { ... }
   // use rootState and rootGetters and _ for any unused argument variables
   // to avoid errors.
 ```
+
+#### SECTION 16 - BIG PROJECT
+---
+
+Within section 16 he went over a big project that used lots of the theory
+covered so far.   I suggest you use the readme file in this directory.
+I got everything working up to and including 15, but from that point onwards
+it used the firebase database, which I couldn't be bothered to use.   This
+section could be a useful reference for all sorts of techniques and seeing
+something big working in practice.
+
+Some things that I noticed were:
+
+He uses a new async await format for fetching data from backend databases, which
+might be worth a look.   He also uses a <base-spinner>, which is interesting.
+
+He added some code to prevent things refreshing from the database all of the time,
+you have to force it using a refresh button.
+
+He also added some transition/animation to the dialog box which made it look good,
+and some nice transitions when we move between different routes.
+
