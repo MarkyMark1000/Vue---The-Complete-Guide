@@ -9,9 +9,9 @@ https://vuejs.org/guide/scaling-up/testing.html
 Within this document, it recommends that you pay consideration to the following types
 of tests:
 
-__Unit__: Checks that inputs to a given function, class, or composable are producing the expected output or side effects.
-__Component__: Checks that your component mounts, renders, can be interacted with, and behaves as expected. These tests import more code than unit tests, are more complex, and require more time to execute.
-__End-to-end__: Checks features that span multiple pages and makes real network requests against your production-built Vue application. These tests often involve standing up a database or other backend.
+__Unit__: Checks that inputs to a given function, class, or composable are producing the expected output or side effects.   
+__Component__: Checks that your component mounts, renders, can be interacted with, and behaves as expected. These tests import more code than unit tests, are more complex, and require more time to execute.   
+__End-to-end__: Checks features that span multiple pages and makes real network requests against your production-built Vue application. These tests often involve standing up a database or other backend.   
 
 It gives an example of creating a unit test, but doesn't show you how to run it.
 

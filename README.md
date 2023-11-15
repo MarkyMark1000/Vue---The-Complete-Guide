@@ -1925,3 +1925,8 @@ Composition API has a nicer way to share code.
 
 
 NEED TO REVISIT THE TUTORIAL - URGHH, I DIDN'T MAKE NOTES HERE !!!
+
+## CERTIFICATE OF COMPLETION
+---
+
+![Certificate of Completion](./certificate.jpg)
