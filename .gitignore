@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 *.code-workspace
+
+# Something wrong with this, can't be bothered to fix now
+Testing/vitest/vitest_and_vite/test_app/coverage

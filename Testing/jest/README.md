@@ -7,6 +7,11 @@ https://www.youtube.com/watch?v=vHOMSq3-KMY
 ## NOTES
 ---
 
+I FOUND THE FOLLOWING INSTALLATION DID NOT WORK.   SOMETHING ABOUT AN INVALID RESPONSE
+POSSIBLY DUE TO BAD NETWORK SETTINGS OR BEING BEHIND A PROXY.   I COULD TRY IT WHEN
+I AM AT HOME, BUT BECAUSE jest ISN'T THE RECOMMENDED UNIT TEST SOLUTION, I AM GOING TO
+LEAVE IT FOR NOW !
+
 When setting up a project using ```vue create someapp```, it is possible to select manual setup.   Within this
 section include ```Unit Testing``` and then select ```Jest```.
 
