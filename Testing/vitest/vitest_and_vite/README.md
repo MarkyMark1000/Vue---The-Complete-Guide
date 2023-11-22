@@ -259,3 +259,45 @@ https://vueschool.io/articles/vuejs-tutorials/start-testing-with-vitest-beginner
 https://blog.logrocket.com/guide-vitest-automated-testing-vue-components/
 https://testdriven.io/blog/vue-unit-testing/
 
+## start-testing-with-vitest-beginners-guide
+---
+
+I used this to initiate the project:
+```
+npm init vue@3      (vue and javascript and eslint)
+cd start-testing-with-vitest-beginners-guide
+npm install
+npm run dev
+```
+
+IMPORTANT:   This installation technique seemed to be the only one I could find that would let
+me install eslint and vitest at the same time.
+
+
+
+
+
+This was added to scripts:
+```
+"test": "vitest"
+```
+
+I also added eslint:
+```
+npm init @eslint/config
+```
+
+
+A new test was added in a new tests/unit directory called HelloWorld.spec.js:
+```
+import {describe, it, expect} from 'vitest';
+//import {mount} from '@vue/test-utils';
+import HelloWorld from '../../components/HelloWorld.vue';
+
+describe("HelloWorld", () => {
+    it("renders properly", () => {
+        const wrapper = mount(HelloWorld, {props: {msg: 'Hello Vitest'}});
+        expect(wrapper.text()).toContain('Hello Vitest');
+    })
+})
+```
