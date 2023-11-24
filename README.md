@@ -9,24 +9,53 @@ It has been updated for Vue3
 ## USEFUL COMMANDS
 ---
 
+After trying out npm, I found it unreliable and prefer using yarn.   If you have
+node installed you can enable it as follows or use a different installation
+method:
+```
+corepack enable
+```
+https://yarnpkg.com/getting-started/install
+
+
 These commands are some of the core commands used with a Vue project, once you
 have it installed:
 ```
 vue --version
 vue create vue-first-app   (or sudo vue ...)
-npm run serve           (or sudo npm ....)
-npm install             (or sudo npm ....)
-npm run lint            (or sudo npm ....)
-npm run build           (or sudo npm ....)
-npm run test:unit:update (update unit test snapshots)
-npm run coverage         (run unit test coverage)
+npm run serve              yarn serve
+npm install                yarn or yarn install
+npm run lint               yarn lint
+npm run build              yarn build
+npm run test:unit          yarn test:unit
+npm run test:unit:update   yarn test:unit:update      (update unit test snapshots)
+npm run coverage           yarn jest --coverage       (jest, coverage)
 ```
+
+```vue create``` is useful for building projects, but only has jest as an option.
+If you want to go down the vite/vitest route, use ```npm create vite@latest``` or
+```yarn create vite``` , then select the manual options and
+'customize with vue-create':   https://www.youtube.com/watch?v=T7NztKiaX20
+Warning:   this route doesn't let you install vuex, but pinia, the latest replacement
+for vuex.
+
+If you encounter things like ```npm install thePackageName --save or --save-dev```,
+there is a yarn equivalent: ```yarn add``` or ```yarn add --dev```
 
 This command is particularly useful when debugging Vue projects, but without the
 linter throwing an error:
 ```
 debugger; // eslint-disable-line
 ```
+
+It may also be possible to debug within VSCode using a 'Javascript Debug Terminal':
+https://vitest.dev/guide/debugging.html
+I think you add breakpoints, open the 'Javascript Debug Terminal' and then type
+something like this:   ```npm run test``` or ```vitest```.
+
+There is also a debugger that comes with vite if you are using that.   It needs to
+be installed:
+https://vitest.dev/guide/ui.html
 
 Sometimes, especially after the initial installation of npm or the vue command line
 you get errors, these have been useful in the past:
@@ -40,12 +69,11 @@ project.   The commands are listed below:
 ```
 npm install --save vue-router@next    // install router for multiple urls.
 npm install --save vuex@next          // vuex great for communication between components
-
+npm add -D @vitejs/plugin-legacy      // from vite docs, try a yarn equivalent
 ```
 
 Code Formatting:
-Right click and format document if using Volar or Vetur.   If you have 'Format in context menus'
-installed, right click multiple documents and select 'format'.
+Right click and format document if using Volar or Vetur.   If you have 'Format in context menus' installed, right click multiple documents and select 'format'.
 
 Template Shortcust:
 ```
@@ -1890,6 +1918,20 @@ YOU NEED TO CONFIGURE THE WEBSERVER AS A SINGLE PAGE APP !!!
 It looks like you can deploy single page apps to AWS.   It uses S3 buckets and
 cloudfront for https, so you need to find examples on the web.
 
+__GITHUB PAGES/AWS ETC__
+
+There is a really interesting section within the vite docs on deployment, especially
+github pages and aws:
+
+https://vitejs.dev/guide/static-deploy.html
+
+You can deploy a website directly when you push code up to github:
+https://pages.github.com
+
+It also has instructions on deploying SPA's on Amazon Amplify, which includes CDN's
+and S3, see close to bottom of page
+
+
 #### Re-using Functionality
 ---
 
@@ -1980,9 +2022,9 @@ https://vitest.dev
 
 This video is really useful because it shows you the vite equivalent of
 the vue cli for setting up a vite project:
-
+https://www.youtube.com/watch?v=T7NztKiaX20
 ```
-npm create vite@lates
+npm create vite@latest
 # try to add a yarn equivalent
 ```
 However, pick Vue, but when you get to Variant, use the arrow keys to 
@@ -2359,6 +2401,163 @@ There are problems with end to end testing:
 - tests can depend upon external api's or features and fail unexpectedly
 
 cypress is used for this in the tutorial and it isn't covered here.
+
+#### VITEST
+----
+
+I don't have a lot of experience with this yet.   Vitest is dependent upon Vite,
+a development server.   Both are supported and recommended by the developers of Vue
+so this is a good route to go down:
+https://vitejs.dev
+https://vitest.dev
+
+This video is great for setting up a vite based project:
+https://www.youtube.com/watch?v=T7NztKiaX20
+
+```
+npm create vite@latest
+yarn create vite
+```
+
+You basically need to use this command, but make sure you pick the appropriate manual
+options and 'customize with vue-create'.   You can't pick vuex as an option, so select
+'pinia', which is the latest replacement for vuex.
+
+Warning, if you see any tutorials creating a vite project like this, beware the '--'.
+There seems to have been an adjustment and the '--' is left out of quite a few tutorials.
+```
+npm create vite@latest my-vue-app -- --template vue
+```
+
+
+These are some useful command, but may not be needed if it has been setup this way:
+```
+npm install -D vitest
+```
+Within package.json there should be a "scripts" section, add this into it:
+```
+"test": "vitest",
+```
+
+__COVERAGE__
+
+I noticed this in the documentation, so tried to work out how to use it:
+
+Add the following into package.json:
+```
+"coverage": "vitest run --coverage"
+```
+
+Try running this:
+```
+npm run coverage          OR       yarn coverage
+```
+
+It then tells you what dependency you are missing.   Try installing it:
+```
+npm install @vitest/coverage-v8     OR yarn add @vitest/coverage-v8
+```
+
+This tends to only test files that have unit tests associated with them.
+You can get it to cover all files and exclude certain areas by updating
+vite.config.js to include something like this:
+```
+  test: {
+    coverage: {
+      all: true,
+      exclude: [
+        'node_modules/**',
+        'src/utilities/**',
+        'dist/**',
+        'public/**',
+    ],
+      reporter: ['text', 'json', 'html'],
+    },
+  },
+```
+
+I don't think the reporter option is necessary.   When you run coverage, it
+will add a 'coverage' directory with an html report in if you have the 'html'
+reporter enabled.   I guess you can delete the 'coverage' directory or
+exclude it within .gitignore.
+
+__VITE UNIT TESTING__
+
+These are the basic notes that I have on VITEST Unit testing at present:
+
+It is possible to run scripts concurrently, ie in parallel, to speed things up:
+```
+import { describe, it } from 'vitest'
+
+// The two tests marked with concurrent will be run in parallel
+describe('suite', () => {
+  it('serial test', async () => { /* ... */ })
+  it.concurrent('concurrent test 1', async ({ expect }) => { /* ... */ })
+  it.concurrent('concurrent test 2', async ({ expect }) => { /* ... */ })
+})
+```
+
+If you use it on a suite, every test in it will be run in parallel:
+```
+import { describe, it } from 'vitest'
+
+// All tests within this suite will be run in parallel
+describe.concurrent('suite', () => {
+  it('concurrent test 1', async ({ expect }) => { /* ... */ })
+  it('concurrent test 2', async ({ expect }) => { /* ... */ })
+  it.concurrent('concurrent test 3', async ({ expect }) => { /* ... */ })
+})
+```
+https://vitest.dev/guide/features.html#running-tests-concurrently
+
+It talks about snapshot, which looks like a mechanism for making sure a
+website doesn't change unexpectedly:
+https://vitest.dev/guide/features.html#snapshot
+
+There is a section on mocking and this seems to talk about two extra things
+that may need to be installed, 'happy-dom' and 'jsdom'.
+
+There are a number of things discussed within this document, but it doesn't
+really give you a tutorial:
+https://vitest.dev/guide/features.html
+
+
+It is possible to specify timeouts on tests:
+```
+import { test } from 'vitest'
+
+test('name', async () => { /* ... */ }, 1000)
+```
+or
+```
+import { beforeAll } from 'vitest'
+
+beforeAll(async () => { /* ... */ }, 1000)
+```
+https://vitest.dev/guide/filtering.html#specifying-a-timeout
+
+You can skip tests and suites:
+```
+import { assert, describe, it } from 'vitest'
+
+describe.skip('skipped suite', () => {
+  it('test', () => {
+    // Suite skipped, no error
+    assert.equal(Math.sqrt(4), 3)
+  })
+})
+
+describe('suite', () => {
+  it.skip('skipped test', () => {
+    // Test skipped, no error
+    assert.equal(Math.sqrt(4), 3)
+  })
+})
+```
+https://vitest.dev/guide/filtering.html#skipping-suites-and-tests
+
+THERE IS AN ENTIRE SECTION ON MOCKING HERE (WILL BE USEFUL IN FUTURE):
+https://vitest.dev/guide/mocking.html
 
 
 ## CERTIFICATE OF COMPLETION
